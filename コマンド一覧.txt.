@@ -1,0 +1,62 @@
+ブランチ→プロジェクトから分岐変更させることでプロジェクト本体には影響を与えずに開発、改修作業ができる機能
+・git branch<branchname>現在のHEADからブランチを作成
+・git checout <branchname>ブランチの切り替え
+・git branch -d <branchname> 指定したブランチの削除　　-rをつけるとリモートブランチの削除　指定したブランチが追跡しているリモートブランチにマージされている場合に使える
+・git branch -D <branchname>マージに関わらずブランチを削除する
+・git branch -m<new branchname>  現在チェックアウトしているブランチネームを新しい名前に変更する
+・git branch -m <old branchname> <new branchname>で変更元を指定することが出来る
+・git branch -u<upstream>　現在テェックアウトしているブランチが、<upstream>で指定したリモートブランチを追跡する。git branch -u <upstream> <branchname>で対象ブランチを指定
+・git branch —unset -upstream　現在テェックアウトしているブランチが追跡しているリモートブランチがあった場合、その紐付けを解除する
+
+
+プル
+リモートリポジトリをローカルリポジトリに取り込む
+1.git pull<リモート名><ブランチ名>  例　git pull origin main
+(git fetch origin/main”リモートの「main」ブランチ → ローカルの「origin/main」ブランチ”と
+ git merge origin/main”ローカルの「origin/main」ブランチ → ローカルの「main」ブランチ”を同時に行った状態になる)
+
+
+コンフリクト
+
+ファイル上で自分の作業と他人の作業がぶつかる。同一ファイルの同一箇所を複数人でマージした時におこる
+対処１→自分のデータを確認し該当箇所を先のデータの一つ下に書く
+対処２→	git checkout --ours text.txt　現在いるブランチをのこす
+対処３→	git checkout --theirs text.txt  取り込むブランチを残す
+
+
+マージ
+現在のマージを他のブランチに取り込む
+・git merge 取り込みたいブランチ
+
+
+
+プルリクエスト
+分散型の管理システムでコードを変更した際、変更した箇所の本体への反映を他の開発者に依頼する
+変更を本人以外がレビューしてから反映させるっことが出来る
+・git hub でプルリクエストを作る
+
+
+
+フォーク
+自分以外のgthubユーザーが公開しているリポジトリをコピーして、自分のgithub上に新しいリポジトリを作成すること。フォーク元のリポジトリにプルリクエストを作成できる
+他の開発者環境を汚染することはない
+1.git hub のリポジトリでフォークボタンを押す
+2.ターミナルで git clone git@github.com:[Githubのユーザー名]/gitの名前.git
+
+
+スタッシュ
+ブランチで作業中だけど、作業を一時止めたい。コミットしたくない場合に使う
+stashで現在の変更を退避して、今すぐやりたい作業をして、退避させていた変更を戻してさぎょうができる
+	0.	git stash save"一時退避”
+	0.	git stash listで確認	→のように表示される「stash@{番号}」: On 「ブランチ名」: 「メッセージ」
+
+作業を再開する
+	0.	git stash apply 復旧したいstash名
+	0.	git stash apply stash@{番号}
+	0.	git stash drop stash@{0}
+
+
+Diff
+２つのファイルを比較して差分を出力する
+・diff [オプション] ファイル1 ファイル2
+
